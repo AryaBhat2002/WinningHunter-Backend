@@ -47,12 +47,16 @@ const userSchema = new mongoose.Schema({
         default: "ADMIN"
     },
 
+    planId: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Plan'
+    }
+
 }, {
     timestamps: true
 });
 
 userSchema.pre('save', async function() {
-    //here you can modify your user before it is saved in mongodb
     const hashedPassword = await bcrypt.hash(this.password, 10);
     this.password = hashedPassword;
 })
